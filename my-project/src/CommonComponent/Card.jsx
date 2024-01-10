@@ -1,28 +1,29 @@
-import React from 'react';
-import { FaFileArrowUp } from "react-icons/fa6";
-const Card = (data) => {
-    return (
-        <div className="bg-white shadow-md rounded-lg p-4 w-60 h-72 overflow-hidden">
-< FaFileArrowUp className="text-6xl text-gray-300 mb-4" />
-            <div className="flex flex-col justify-between h-full">
-                <div>
-                    <h2 className="text-xl font-bold text-gray-800">card</h2>
-                    <p className="mt-2 text-gray-600">{data.description}</p>
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                    <div className="flex items-center">
-                        <div className="flex flex-col ml-3">
-                            <span className="text-gray-800 font-bold">{data.isOpen.tagTitle}</span>
-                            <span className="text-gray-400 text-xs">{data.fileSize}</span>
-                        </div>
-                    </div>
-                    <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Download</button>
-                </div>
-            </div>
-            
-            
-        </div>
-    );
-};
+import React from 'react'
+import { FaRegFileAlt } from "react-icons/fa";
+import { LuDownload } from "react-icons/lu";
+import { IoMdCloseCircle } from "react-icons/io";
+import { motion } from "framer-motion"
 
-export default Card;
+const Card = ({data}) => {
+  return (
+    <motion.div className='relative w-60 h-72 rounded bg-zinc-900/90 text-white px-8 py-10 overflow-hidden'  whileDrag={{scale:1.2}}drag dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+      <FaRegFileAlt />
+      <p className='text-sm leading-snug mt-5'>{data.description}</p>
+      <div className='footer absolute bottom-0 w-full left-0 rounded-[30px]'>
+        <div className='flex items-center justify-between'>
+          <h5>{data.fileSize}</h5>
+          <span className='w-7 h-7 bg-zinc-600 rounded-full flex items-center justify-center'>
+            {data.close ? <IoMdCloseCircle /> : <LuDownload />}
+          </span>
+        </div>
+        {data.tag.isOpen && (
+          <div className={`tag w-full h-10 ${data.tag.tagColor == "blue" ? "bg-blue-200" : "bg-green-200"} py-2 flex items-center justify-center rounded-lg`}>
+            <h3 className='text-md'> Download now</h3>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
+export default Card
